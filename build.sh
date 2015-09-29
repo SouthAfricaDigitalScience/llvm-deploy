@@ -34,7 +34,7 @@ mkdir -p $SOFT_DIR
 
 #  Download the source file if it's not available locally.
 #  we were originally using ncurses as the test application
-if [[ ! -e $SRC_DIR/$SOURCE_FILE ]] ; then
+if [[ -s $SRC_DIR/$SOURCE_FILE ]] ; then
   echo "seems like this is the first build - let's get the source"
   mkdir -p $SRC_DIR
 # use local mirrors if you can. Remember - UFS has to pay for the bandwidth!
