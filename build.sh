@@ -45,7 +45,7 @@ else
 fi
 
 # now unpack it into the workspace
-tar -xvzf $SRC_DIR/$SOURCE_FILE -C $WORKSPACE
+tar xJf $SRC_DIR/$SOURCE_FILE -C $WORKSPACE
 
 #  generally tarballs will unpack into the NAME-VERSION directory structure. If this is not the case for your application
 #  ie, if it unpacks into a different default directory, either use the relevant tar commands, or change
