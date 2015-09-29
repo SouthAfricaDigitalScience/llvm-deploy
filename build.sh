@@ -39,7 +39,7 @@ if [[ ! -s $SRC_DIR/$SOURCE_FILE ]] ; then
   mkdir -p $SRC_DIR
 # use local mirrors if you can. Remember - UFS has to pay for the bandwidth!
 # http://llvm.org/releases/3.7.0/llvm-3.7.0.src.tar.xz
-  wget http://llvm.org/releases/${VERSION}/${NAME}-${VERSION}.src.tar.xz $SOURCE_FILE -O $SRC_DIR/$SOURCE_FILE
+  wget http://llvm.org/releases/${VERSION}/${NAME}-${VERSION}.src.tar.xz -O $SRC_DIR/$SOURCE_FILE
 else
   echo "continuing from previous builds, using source at " $SRC_DIR/$SOURCE_FILE
 fi
