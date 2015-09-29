@@ -1,4 +1,5 @@
 #!/bin/bash -e
+source /usr/share/modules/init/bash
 # this is the build job for LLVM
 # it only does clang for now.
 SOURCE_FILE=$NAME-$VERSION.src.tar.xz
