@@ -52,10 +52,10 @@ tar xJf $SRC_DIR/$SOURCE_FILE -C $WORKSPACE
 #  the next lines
 
 # We will be running configure and make in this directory
-mkdir -p $WORKSPACE/${NAME-$VERSION}.src/build
-cd $WORKSPACE/${NAME-$VERSION}.src/build
+mkdir -p $WORKSPACE/${NAME}-${VERSION}.src/build
+cd $WORKSPACE/${NAME}-${VERSION}.src/build
 # Note that $SOFT_DIR is used as the target installation directory.
-../configure --prefix $SOFT_DIR
+../configure --prefix=$SOFT_DIR
 
 # The build nodes have 8 core jobs. jobs are blocking, which means you can build with at least 8 core parallelism.
 # this might cause instability in the builds, so it's up to you.
