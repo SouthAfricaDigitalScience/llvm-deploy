@@ -38,7 +38,7 @@ if [[ ! -e $SRC_DIR/$SOURCE_FILE ]] ; then
   echo "seems like this is the first build - let's get the source"
   mkdir -p $SRC_DIR
 # use local mirrors if you can. Remember - UFS has to pay for the bandwidth!
-  wget http://llvm.org/releases/${VERSION}.src.tar.xz $SOURCE_FILE -O $SRC_DIR/$SOURCE_FILE
+  wget http://llvm.org/releases/${NAME}-${VERSION}.src.tar.xz $SOURCE_FILE -O $SRC_DIR/$SOURCE_FILE
 else
   echo "continuing from previous builds, using source at " $SRC_DIR/$SOURCE_FILE
 fi
