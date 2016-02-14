@@ -3,7 +3,7 @@
 # this is the build job for LLVM
 module add deploy
 module add gcc/5.1.0
-
+module add  python/2.7.11-gcc-${GCC_VERSION}
 module add zlib
 echo "Tests have passed - configuring to deploy into ${SOFT_DIR} "
 cd $WORKSPACE/${NAME}-${VERSION}.src/build-${BUILD_NUMBER}

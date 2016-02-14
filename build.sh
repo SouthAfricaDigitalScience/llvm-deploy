@@ -7,6 +7,7 @@ SOURCE_FILE=${NAME}-${VERSION}.src.tar.xz
 # We provide the base module which all jobs need to get their environment on the build slaves
 module add ci
 module add gcc/5.1.0
+module add  python/2.7.11-gcc-${GCC_VERSION}
 module add zlib
 
 # Next, a bit of verbose description of the build environment. This is useful when debugging initial builds and you

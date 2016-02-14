@@ -3,6 +3,7 @@
 . /etc/profile.d/modules.sh
 module load ci
 module add gcc/5.1.0
+module add  python/2.7.11-gcc-${GCC_VERSION}
 
 cd ${WORKSPACE}/${NAME}-${VERSION}.src/build-${BUILD_NUMBER}
 make check
