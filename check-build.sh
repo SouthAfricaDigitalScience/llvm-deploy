@@ -2,6 +2,8 @@
 # Check build file for llvm
 . /etc/profile.d/modules.sh
 module load ci
+module add gcc/5.1.0
+
 cd ${WORKSPACE}/${NAME}-${VERSION}.src/build-${BUILD_NUMBER}
 make check
 make test
