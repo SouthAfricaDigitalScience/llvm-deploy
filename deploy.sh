@@ -13,7 +13,7 @@ rm -rf *
 echo "Configuring deploy"
 cmake ../ \
 -G"Unix Makefiles" \
--DGCC_INSTALL_PREFIX \
+-DGCC_INSTALL_PREFIX=${GCC_DIR} \
 -DCMAKE_INSTALL_PREFIX=${SOFT_DIR}
 make
 

@@ -113,6 +113,6 @@ cd $WORKSPACE/${NAME}-${VERSION}/build-${BUILD_NUMBER}
 #  Cmake instructions for llvm at : http://llvm.org/docs/CMake.html
 cmake ../ \
 -G"Unix Makefiles" \
--DGCC_INSTALL_PREFIX \
+-DGCC_INSTALL_PREFIX=${GCC_DIR} \
 -DCMAKE_INSTALL_PREFIX=${SOFT_DIR}
 make
