@@ -5,7 +5,7 @@ module load ci
 module add gcc/5.1.0
 module add  python/2.7.11-gcc-${GCC_VERSION}
 
-cd ${WORKSPACE}/${NAME}-${VERSION}.src/build-${BUILD_NUMBER}
+cd ${WORKSPACE}/${NAME}-${VERSION}/build-${BUILD_NUMBER}
 make check
 make test
 echo $?

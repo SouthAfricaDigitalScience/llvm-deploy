@@ -6,7 +6,7 @@ module add gcc/5.1.0
 module add  python/2.7.11-gcc-${GCC_VERSION}
 module add zlib
 echo "Tests have passed - configuring to deploy into ${SOFT_DIR} "
-cd $WORKSPACE/${NAME}-${VERSION}.src/build-${BUILD_NUMBER}
+cd $WORKSPACE/${NAME}-${VERSION}/build-${BUILD_NUMBER}
 echo "Cleaning out CI build"
 rm -rf *
 echo "Configuring deploy"

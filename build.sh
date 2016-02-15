@@ -94,9 +94,10 @@ fi
 
 
 # now unpack it into the workspace
-tar xJf ${SRC_DIR}/${LLVM_SOURCE_FILE} -C ${WORKSPACE}
+mkdir -p ${WORKSPACE}/${NAME}-${VERSION}/tools/clang-${VERSION}/tools/clang-tools-extra-${VERSION}
 
-mkdir -p ${WORKSPACE}/${NAME}-${VERSION}.src/tools/clang-${VERSION}/tools/clang-tools-extra-${VERSION}.src
+tar xf ${SRC_DIR}/${LLVM_SOURCE_FILE} -C ${WORKSPACE}/${NAME}-${VERSION} --strip-components=1
+
 # Instructions at  http://clang.llvm.org/get_started.html
 # Unpack clang into the llvm/tools directory ...
 tar xf ${SRC_DIR}/${CLANG_SOURCE_FILE} -C ${WORKSPACE}/${NAME}-${VERSION}.src/tools/clang-${VERSION} --strip-components=1
@@ -104,8 +105,8 @@ tar xf ${SRC_DIR}/${CLANG_SOURCE_FILE} -C ${WORKSPACE}/${NAME}-${VERSION}.src/to
 tar xf ${SRC_DIR}/${CLANG_TOOLS_SOURCE_FILE} -C ${WORKSPACE}/${NAME}-${VERSION}.src/tools/clang-${VERSION}/clang-tools-extra-${VERSION} --strip-components=1
 
 # We will be running configure and make in this directory
-mkdir -p $WORKSPACE/${NAME}-${VERSION}.src/build-${BUILD_NUMBER}
-cd $WORKSPACE/${NAME}-${VERSION}.src/build-${BUILD_NUMBER}
+mkdir -p $WORKSPACE/${NAME}-${VERSION}/build-${BUILD_NUMBER}
+cd $WORKSPACE/${NAME}-${VERSION}/build-${BUILD_NUMBER}
 # Note that $SOFT_DIR is used as the target installation directory.
 
 #  Cmake instructions for llvm at : http://llvm.org/docs/CMake.html
