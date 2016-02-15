@@ -96,13 +96,13 @@ fi
 # now unpack it into the workspace
 mkdir -p ${WORKSPACE}/${NAME}-${VERSION}/tools/clang-${VERSION}/tools/clang-tools-extra-${VERSION}
 
-tar xf ${SRC_DIR}/${LLVM_SOURCE_FILE} -C ${WORKSPACE}/${NAME}-${VERSION} --strip-components=1
+tar xf ${SRC_DIR}/${LLVM_SOURCE_FILE} -C ${WORKSPACE}/${NAME}-${VERSION} --strip-components=1 --skip-old-files
 
 # Instructions at  http://clang.llvm.org/get_started.html
 # Unpack clang into the llvm/tools directory ...
-tar xf ${SRC_DIR}/${CLANG_SOURCE_FILE} -C ${WORKSPACE}/${NAME}-${VERSION}.src/tools/clang-${VERSION} --strip-components=1
+tar xf ${SRC_DIR}/${CLANG_SOURCE_FILE} -C ${WORKSPACE}/${NAME}-${VERSION}.src/tools/clang-${VERSION} --strip-components=1 --skip-old-files
 # Now unpack the clang extra tools into the clang/tools dir
-tar xf ${SRC_DIR}/${CLANG_TOOLS_SOURCE_FILE} -C ${WORKSPACE}/${NAME}-${VERSION}/tools/clang-${VERSION}/clang-tools-extra-${VERSION} --strip-components=1
+tar xf ${SRC_DIR}/${CLANG_TOOLS_SOURCE_FILE} -C ${WORKSPACE}/${NAME}-${VERSION}/tools/clang-${VERSION}/clang-tools-extra-${VERSION} --strip-components=1 --skip-old-files
 
 # We will be running configure and make in this directory
 mkdir -p $WORKSPACE/${NAME}-${VERSION}/build-${BUILD_NUMBER}
