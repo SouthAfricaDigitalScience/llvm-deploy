@@ -22,7 +22,7 @@ make -j
 
 echo "Deploy build has completed - installing into ${SOFT_DIR}"
 make install
-
+mkdir -p modules
 echo "Creating deploy modulefile"
 
 (
