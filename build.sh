@@ -9,7 +9,7 @@ CLANG_TOOLS_SOURCE_FILE=clang-tools-extra-${VERSION}.src.tar.xz
 # We provide the base module which all jobs need to get their environment on the build slaves
 module add ci
 module add gcc/5.1.0
-module add  python/2.7.11-gcc-${GCC_VERSION}
+module add python/2.7.11-gcc-${GCC_VERSION}
 module add zlib
 
 # Next, a bit of verbose description of the build environment. This is useful when debugging initial builds and you
@@ -94,7 +94,7 @@ fi
 
 
 # now unpack it into the workspace
-tar xJf ${SRC_DIR}/${SOURCE_FILE} -C ${WORKSPACE}
+tar xJf ${SRC_DIR}/${LLVM_SOURCE_FILE} -C ${WORKSPACE}
 
 mkdir -p ${WORKSPACE}/${NAME}-${VERSION}.src/tools/clang-${VERSION}/tools/clang-tools-extra-${VERSION}.src
 # Instructions at  http://clang.llvm.org/get_started.html
