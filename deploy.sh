@@ -10,13 +10,14 @@ cd $WORKSPACE/${NAME}-${VERSION}.src/build-${BUILD_NUMBER}
 echo "Cleaning out CI build"
 rm -rf *
 echo "Configuring deploy"
-../configure \
---prefix=${SOFT_DIR} \
---enable-shared \
---enable-zlib
+cmake ../ \
+-G"Unix Makefiles" \
+-DGCC_INSTALL_PREFIX \
+-DCMAKE_INSTALL_PREFIX=${SOFT_DIR}
+make
 
 echo "Building deploy"
-make -j2
+make -j
 
 echo "Deploy build has completed - installing into ${SOFT_DIR}"
 make install

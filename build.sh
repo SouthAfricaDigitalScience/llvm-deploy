@@ -2,7 +2,9 @@
 . /etc/profile.d/modules.sh
 # this is the build job for LLVM
 # it only does clang for now.
-SOURCE_FILE=${NAME}-${VERSION}.src.tar.xz
+LLVM_SOURCE_FILE=${NAME}-${VERSION}.src.tar.xz
+CLANG_SOURCE_FILE=cfe-${VERSION}.src.tar.xz
+CLANG_TOOLS_SOURCE_FILE=clang-tools-extra-${VERSION}.src.tar.xz
 
 # We provide the base module which all jobs need to get their environment on the build slaves
 module add ci
@@ -32,43 +34,83 @@ mkdir -p ${WORKSPACE}
 mkdir -p ${SRC_DIR}
 # SOFT_DIR is the directory into which the application will be "installed"  : /apprepo/../name/version
 
+################# Get LLVM #################################################
 #  Download the source file if it's not available locally.
 #  we were originally using ncurses as the test application
-if [ ! -e ${SRC_DIR}/${SOURCE_FILE}.lock ] && [ ! -s ${SRC_DIR}/${SOURCE_FILE} ] ; then
-  touch  ${SRC_DIR}/${SOURCE_FILE}.lock
+if [ ! -e ${SRC_DIR}/${LLVM_SOURCE_FILE}.lock ] && [ ! -s ${SRC_DIR}/${LLVM_SOURCE_FILE} ] ; then
+  touch  ${SRC_DIR}/${LLVM_SOURCE_FILE}.lock
   echo "seems like this is the first build - let's get the source"
   mkdir -p ${SRC_DIR}
 # use local mirrors if you can. Remember - UFS has to pay for the bandwidth!
 # http://llvm.org/releases/3.7.0/llvm-3.7.0.src.tar.xz
-  wget http://llvm.org/releases/${VERSION}/${NAME}-${VERSION}.src.tar.xz -O ${SRC_DIR}/${SOURCE_FILE}
+  wget http://llvm.org/releases/${VERSION}/${NAME}-${VERSION}.src.tar.xz -O ${SRC_DIR}/${LLVM_SOURCE_FILE}
   echo "releasing lock"
-  rm -v ${SRC_DIR}/${SOURCE_FILE}.lock
-elif [ -e ${SRC_DIR}/${SOURCE_FILE}.lock ] ; then
+  rm -v ${SRC_DIR}/${LLVM_SOURCE_FILE}.lock
+elif [ -e ${SRC_DIR}/${LLVM_SOURCE_FILE}.lock ] ; then
   # Someone else has the file, wait till it's released
-  while [ -e ${SRC_DIR}/${SOURCE_FILE}.lock ] ; do
+  while [ -e ${SRC_DIR}/${LLVM_SOURCE_FILE}.lock ] ; do
     echo " There seems to be a download currently under way, will check again in 5 sec"
     sleep 5
   done
 else
-  echo "continuing from previous builds, using source at " ${SRC_DIR}/${SOURCE_FILE}
+  echo "continuing from previous builds, using source at " ${SRC_DIR}/${LLVM_SOURCE_FILE}
 fi
+################# Get CLANG #################################################
+if [ ! -e ${SRC_DIR}/${CLANG_SOURCE_FILE}.lock ] && [ ! -s ${SRC_DIR}/${CLANG_SOURCE_FILE} ] ; then
+  touch  ${SRC_DIR}/${CLANG_SOURCE_FILE}.lock
+  echo "seems like this is the first build - let's get the source"
+# use local mirrors if you can. Remember - UFS has to pay for the bandwidth!
+# http://llvm.org/releases/3.7.0/llvm-3.7.0.src.tar.xz
+  wget http://llvm.org/releases/${VERSION}/${CLANG_SOURCE_FILE} -O ${SRC_DIR}/${CLANG_SOURCE_FILE}
+  echo "releasing clang lock"
+  rm -v ${SRC_DIR}/${CLANG_SOURCE_FILE}.lock
+elif [ -e ${SRC_DIR}/${CLANG_SOURCE_FILE}.lock ] ; then
+  # Someone else has the file, wait till it's released
+  while [ -e ${SRC_DIR}/${CLANG_SOURCE_FILE}.lock ] ; do
+    echo " There seems to be a download currently under way, will check again in 5 sec"
+    sleep 5
+  done
+else
+  echo "continuing from previous builds, using source at " ${SRC_DIR}/${CLANG_SOURCE_FILE}
+fi
+################# Get CLANG tools #################################################
+if [ ! -e ${SRC_DIR}/${CLANG_TOOLS_SOURCE_FILE}.lock ] && [ ! -s ${SRC_DIR}/${CLANG_TOOLS_SOURCE_FILE} ] ; then
+  touch  ${SRC_DIR}/${CLANG_TOOLS_SOURCE_FILE}.lock
+  echo "seems like this is the first build - let's get the source"
+# use local mirrors if you can. Remember - UFS has to pay for the bandwidth!
+# http://llvm.org/releases/3.7.0/llvm-3.7.0.src.tar.xz
+  wget http://llvm.org/releases/${VERSION}/${CLANG_TOOLS_SOURCE_FILE} -O ${SRC_DIR}/${CLANG_TOOLS_SOURCE_FILE}
+  echo "releasing clang tools extra lock file"
+  rm -v ${SRC_DIR}/${CLANG_TOOLS_SOURCE_FILE}.lock
+elif [ -e ${SRC_DIR}/${CLANG_TOOLS_SOURCE_FILE}.lock ] ; then
+  # Someone else has the file, wait till it's released
+  while [ -e ${SRC_DIR}/${CLANG_TOOLS_SOURCE_FILE}.lock ] ; do
+    echo " There seems to be a download currently under way, will check again in 5 sec"
+    sleep 5
+  done
+else
+  echo "continuing from previous builds, using source at " ${SRC_DIR}/${CLANG_TOOLS_SOURCE_FILE}
+fi
+
 
 # now unpack it into the workspace
 tar xJf ${SRC_DIR}/${SOURCE_FILE} -C ${WORKSPACE}
 
-#  generally tarballs will unpack into the NAME-VERSION directory structure. If this is not the case for your application
-#  ie, if it unpacks into a different default directory, either use the relevant tar commands, or change
-#  the next lines
+mkdir -p ${WORKSPACE}/${NAME}-${VERSION}.src/tools/clang-${VERSION}/tools/clang-tools-extra-${VERSION}.src
+# Instructions at  http://clang.llvm.org/get_started.html
+# Unpack clang into the llvm/tools directory ...
+tar xf ${SRC_DIR}/${CLANG_SOURCE_FILE} -C ${WORKSPACE}/${NAME}-${VERSION}.src/tools/clang-${VERSION} --strip-components=1
+# Now unpack the clang extra tools into the clang/tools dir
+tar xf ${SRC_DIR}/${CLANG_TOOLS_SOURCE_FILE} -C ${WORKSPACE}/${NAME}-${VERSION}.src/tools/clang-${VERSION}/clang-tools-extra-${VERSION} --strip-components=1
 
 # We will be running configure and make in this directory
 mkdir -p $WORKSPACE/${NAME}-${VERSION}.src/build-${BUILD_NUMBER}
 cd $WORKSPACE/${NAME}-${VERSION}.src/build-${BUILD_NUMBER}
 # Note that $SOFT_DIR is used as the target installation directory.
-../configure \
---prefix=${SOFT_DIR} \
---enable-shared \
---enable-zlib
 
-# The build nodes have 8 core jobs. jobs are blocking, which means you can build with at least 8 core parallelism.
-# this might cause instability in the builds, so it's up to you.
+#  Cmake instructions for llvm at : http://llvm.org/docs/CMake.html
+cmake ../ \
+-G"Unix Makefiles" \
+-DGCC_INSTALL_PREFIX \
+-DCMAKE_INSTALL_PREFIX=${SOFT_DIR}
 make
