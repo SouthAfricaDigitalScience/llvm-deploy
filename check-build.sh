@@ -2,9 +2,9 @@
 # Check build file for llvm
 . /etc/profile.d/modules.sh
 module load ci
-module add gcc/5.1.0
+module add gcc
 module add cmake
-module add  python/2.7.11-gcc-${GCC_VERSION}
+module add  python
 
 cd ${WORKSPACE}/${NAME}-${VERSION}/build-${BUILD_NUMBER}
 make check
@@ -25,7 +25,7 @@ proc ModulesHelp { } {
 
 module-whatis   "$NAME $VERSION."
 setenv       LLVM_VERSION       $VERSION
-setenv       LLVM_DIR           /apprepo/$::env(SITE)/$::env(OS)/$::env(ARCH)/$NAME/$VERSION
+setenv       LLVM_DIR           /data/ci-build/$::env(SITE)/$::env(OS)/$::env(ARCH)/$NAME/$VERSION
 prepend-path PATH               $::env(LLVM_DIR)/bin
 prepend-path LD_LIBRARY_PATH    $::env(LLVM_DIR)/lib
 prepend-path CFLAGS             "-I$::env(LLVM_DIR)/include"

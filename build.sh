@@ -8,9 +8,9 @@ CLANG_TOOLS_SOURCE_FILE=clang-tools-extra-${VERSION}.src.tar.xz
 
 # We provide the base module which all jobs need to get their environment on the build slaves
 module add ci
-module add gcc/5.1.0
+module add gcc
 module add cmake
-module add python/2.7.11-gcc-${GCC_VERSION}
+module add python
 module add zlib
 
 # Next, a bit of verbose description of the build environment. This is useful when debugging initial builds and you
