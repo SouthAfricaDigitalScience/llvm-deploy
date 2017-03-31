@@ -111,7 +111,7 @@ cd $WORKSPACE/${NAME}-${VERSION}/build-${BUILD_NUMBER}
 # Note that $SOFT_DIR is used as the target installation directory.
 
 #  Cmake instructions for llvm at : http://llvm.org/docs/CMake.html
-cmake ../ \
+export CC=gcc cmake ../ \
 -G"Unix Makefiles" \
 -DGCC_INSTALL_PREFIX=${GCC_DIR} \
 -DCMAKE_INSTALL_PREFIX=${SOFT_DIR}
