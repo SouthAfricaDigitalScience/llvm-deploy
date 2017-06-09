@@ -4,7 +4,7 @@
 module load ci
 module add gcc
 module add cmake
-module add  python
+module add  python/2.7.13
 
 cd ${WORKSPACE}/${NAME}-${VERSION}/build-${BUILD_NUMBER}
 make check
@@ -33,5 +33,5 @@ prepend-path LDFLAGS            "-L$::env(LLVM_DIR)/lib"
 MODULE_FILE
 ) > modules/$VERSION
 
-mkdir -p ${COMPILERS_MODULES}/${NAME}
-cp modules/$VERSION ${COMPILERS_MODULES}/${NAME}
+mkdir -p ${COMPILERS}/${NAME}
+cp modules/$VERSION ${COMPILERS}/${NAME}

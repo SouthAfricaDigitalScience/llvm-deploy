@@ -5,7 +5,7 @@ module add deploy
 module add gcc
 module add cmake
 module add  python
-module add zlib
+module add  python/2.7.13
 echo "Tests have passed - configuring to deploy into ${SOFT_DIR} "
 cd $WORKSPACE/${NAME}-${VERSION}/build-${BUILD_NUMBER}
 echo "Cleaning out CI build"
@@ -45,5 +45,5 @@ prepend-path LDFLAGS            "-L$::env(LLVM_DIR)/lib"
 MODULE_FILE
 ) > modules/$VERSION
 
-mkdir -p ${COMPILERS_MODULES}/${NAME}
-cp modules/$VERSION ${COMPILERS_MODULES}/${NAME}
+mkdir -p ${COMPILERS}/${NAME}
+cp modules/$VERSION ${COMPILERS}/${NAME}
