@@ -10,7 +10,7 @@ CLANG_TOOLS_SOURCE_FILE=clang-tools-extra-${VERSION}.src.tar.xz
 module add ci
 module add gcc
 module add cmake
-module add python/2.7.13
+module add python/2.7.13-gcc-${GCC_VERSION}
 
 # Next, a bit of verbose description of the build environment. This is useful when debugging initial builds and you
 # may want to remove it later.

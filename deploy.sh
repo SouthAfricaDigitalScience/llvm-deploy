@@ -5,7 +5,7 @@ module add deploy
 module add gcc
 module add cmake
 module add  python
-module add  python/2.7.13
+module add python/2.7.13-gcc-${GCC_VERSION}
 echo "Tests have passed - configuring to deploy into ${SOFT_DIR} "
 cd $WORKSPACE/${NAME}-${VERSION}/build-${BUILD_NUMBER}
 echo "Cleaning out CI build"
